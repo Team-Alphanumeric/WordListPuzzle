@@ -11,9 +11,11 @@
 using namespace std;
 #include <vector>
 
+template <typename T>
+void quickSort (vector <T>& list, int left, int right);
 
-void quickSort (vector <int>& list, int left, int right);
-int partition(vector <int>& list, int left, int right);
+template <typename T>
+int partition (vector <T>& list, int left, int right);
 
 
 
