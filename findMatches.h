@@ -2,12 +2,13 @@
  * findMatches.h
  *
  *  Created on: Feb 6, 2015
- *      Author: alex
+ *      Author: Alex, Thurston
  */
 
 #ifndef FINDMATCHES_H_
 #define FINDMATCHES_H_
 #include "Wordlist.h"
+#include "Grid.h"
 
 /**
  * findMatches searches the grid of words and prints out all the matching words
@@ -19,8 +20,5 @@
  * @return void -doesn't return anything
  */
 void findMatches(const Wordlist w1, const Grid g1);
-void checkRightHor(const Wordlist w1,const Grid g1, int horPos, int verPos);
-
-
 
 #endif /* FINDMATCHES_H_ */
