@@ -2,7 +2,7 @@
  * Wordlist.h
  *
  *  Created on: Feb 4, 2015
- *      Author: alex
+ *      Author: Alex, Thurston
  */
 
 #ifndef WORDLIST_H_
@@ -21,9 +21,10 @@ public:
 	int getVectorSize();
 	bool binSearchWordList(vector <string> wordlist, string wordTarget);
 	vector <string> getVector();
-	bool compareWord(string word1);
+	bool existWord(string word1);
+	bool operator&&(string wd) {return this->compareWord(wd);}
 	string getWord(const int index);
-	friend ostream& operator << (ostream &ostr, Wordlist w1);
+	friend ostream& operator<< (ostream &ostr, Wordlist w1);
 	virtual ~Wordlist();
 };
 
