@@ -86,7 +86,7 @@ string Wordlist::getWord(const int index)
  *  @param string word -an inputed word that is compared against the word list to see if there is a matching word
  *  @return boolean, -returns true if there is a matching word, returns false if there is no matching word
  */
-bool Wordlist::compareWord(string word1)
+bool Wordlist::existWord(string word1)
 { return binSearchWordList(wds,word1); }
 /**
  * binSearchWordList changes the interface of binary search to have the user just enter in the vector and the list
