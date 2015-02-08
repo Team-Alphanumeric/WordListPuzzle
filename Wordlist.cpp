@@ -14,6 +14,8 @@ using namespace std;
 #include <stdio.h>
 #include <string.h>
 #include <stdexcept>
+#include "binarySearch.h"
+#include "d_except.h"
 
 Wordlist::Wordlist()
 {
@@ -75,9 +77,7 @@ string Wordlist::getWord(const int index)
 {
 	try{return wds[index];}
 	catch(const out_of_range& oor)
-	{ cout << "Out of Range Error when Retrieving word from Wordlist: " << oor.what() << endl;	}
-	return "OutOfRange";
-
+	{ throw rangeError("Out of Range Error when Retrieving word from Wordlist:"); return "";}
 }
 /**
  *  compareWord uses a binary search to serach for a word in the word list and returns true
