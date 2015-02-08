@@ -22,7 +22,8 @@ public:
 	bool binSearchWordList(vector <string> wordlist, string wordTarget);
 	vector <string> getVector();
 	bool existWord(string word1);
-	bool operator&&(string wd) {return this->compareWord(wd);}
+	bool prefix(string word1);
+	bool operator&&(string wd) {return this->existWord(wd);}
 	string getWord(const int index);
 	friend ostream& operator<< (ostream &ostr, Wordlist w1);
 	virtual ~Wordlist();
