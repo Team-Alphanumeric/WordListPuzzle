@@ -19,15 +19,11 @@ public:
 	void readWords(string filename);
 	void printWords();
 	int getVectorSize();
+	bool binSearchWordList(vector <string> wordlist, string wordTarget);
 	vector <string> getVector();
-	template <typename T>
-	void quickSort(const vector <T> list, int left, int right);
-	void quiSort();
-	template <typename T>
-	int partition(const vector <T> list, int left, int right);
+	bool compareWord(string word1);
 	string getWord(const int index);
 	friend ostream& operator << (ostream &ostr, Wordlist w1);
-	friend bool operator< (const string lhs, string rhs);
 	virtual ~Wordlist();
 };
 
