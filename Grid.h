@@ -19,7 +19,7 @@ public:
 	const int getSize();
 	virtual ~Grid();
 protected:
-		matrix<char> lttrs;
+		vector< vector<char> > lttrs;
 		int size;
 };
 
