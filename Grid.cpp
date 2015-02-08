@@ -2,7 +2,7 @@
  * Grid.cpp
  *
  *  Created on: Feb 8, 2015
- *      Author: alex
+ *      Author: Alex, Thurston
  */
 
 #include "Grid.h"
@@ -28,7 +28,7 @@ using namespace std;
 const int Grid::getSize() {return size;}
 
 const char Grid::getChar(const int m, const int n)
-{ return lttrs[m][n]; }
+{ return lttrs[(m+size) % size][(n+size) % size]; }
 
 Grid::Grid() {size = 0;}
 
