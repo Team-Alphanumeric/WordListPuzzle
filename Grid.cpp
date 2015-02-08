@@ -10,6 +10,8 @@
 /* Implements the grid class for a word search which holds and accesses a character matrix
 */
 
+#include "d_except.h"
+#include "matrix.h"
 #include "Grid.h"
 #include <iostream>
 #include <fstream>
@@ -18,8 +20,9 @@
 #include <locale>
 #include <sstream>
 #include <string>
-#include "d_execpt.h"
-#include "matrix.h"
+#include <cstring>
+
+using namespace std;
 
 
 const int Grid::getSize() {return size;}
@@ -31,16 +34,18 @@ Grid::Grid() {size = 0;}
 
 Grid::Grid(const string filename) { setGrid(filename); }
 // sets the grid to the values of the given file
-void Grid::setGrid(const string filename)
+void Grid::setGrid(string filename)
 {
 	// open file
 	ifstream gridfile(filename.c_str());
 	// attempt to read line with size of file
 	string line;
+
 	if(gridfile.is_open())
 	{
 		getline(gridfile,line); // read first line
-		char * pch =strtok(line," "); // split string by space character token
+		char * numberLine = (char*)line.c_str(); // convert to char *
+		char * pch =strtok(numberLine," "); // split string by space character token
 		istringstream convert(pch); // stringstream used for the conversion constructed with the contents of 'pch'
                              		// ie: the stream will start containing the characters of 'pch'
 		if ( !(convert >> size) ) // give the value to 'size' using the characters in the stream
@@ -49,7 +54,8 @@ void Grid::setGrid(const string filename)
 	else { throw fileOpenError("Unable to open grid file!"); }
 
 	// size the data vectors
-	lttrs.resize(size,size); // size number of rows and columns
+	lttrs.resize(size);
+	for(int i=0;i<size;i++) { lttrs[i].resize(size); }
 
 	// read the characters from the rest of the file
 	char *ch; // temporary free character
@@ -58,9 +64,9 @@ void Grid::setGrid(const string filename)
 		for(int j=0;j<size;j++)
 		{
 			gridfile.read(ch,1); // read a character
-			if(*ch = '\s') // ignore spaces
-			{ j--; } // move index back for spaces
-			else if((*ch = '\n') || (*ch = '\r')) // skip to next row if encountering new line or return
+			if(*ch == ' ') { j--; } // move index back for spaces
+
+			else if((*ch == '\n') || (*ch == '\r')) // skip to next row if encountering new line or return
 			{ break; } // move to next row
 			else
 			{ lttrs[i][j] = *ch; } // store character
