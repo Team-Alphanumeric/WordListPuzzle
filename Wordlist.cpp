@@ -2,7 +2,7 @@
  * Wordlist.cpp
  *
  *  Created on: Feb 4, 2015
- *      Author: alex
+ *      Author: Alex, Thurston
  */
 
 #include "Wordlist.h"
@@ -77,7 +77,7 @@ string Wordlist::getWord(const int index)
 {
 	try{return wds[index];}
 	catch(const out_of_range& oor)
-	{ throw rangeError("Out of Range Error when Retrieving word from Wordlist:"); return "";}
+	{ cout << "Out of Range Error when Retrieving word from Wordlist: " << oor.what(); return "";}
 }
 /**
  *  compareWord uses a binary search to serach for a word in the word list and returns true
@@ -103,10 +103,7 @@ bool Wordlist::binSearchWordList(vector <string> wordlist, string wordTarget)
  * getVector() returns the vector which contains a list of words
  * @return vector <string> -returns the vector that contains the word list
  */
-vector <string> Wordlist::getVector()
-{
-	return wds;
-}
+vector <string> Wordlist::getVector() { return wds; }
 
 //overloading operator for << that prints out all the words stored in the wordlist, aka wds vector
 ostream& operator<< (ostream &ostr, Wordlist w1)
