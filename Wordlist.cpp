@@ -65,7 +65,6 @@ void Wordlist::readWords(const string filename)
  */
 int Wordlist::getVectorSize()
 { return wds.size(); }
-
 /**
  * getWord(int index) returns the word in its data member wds with that index
  * Therefore it retrieves the word at the given index
@@ -80,7 +79,30 @@ string Wordlist::getWord(const int index)
 	return "OutOfRange";
 
 }
-
+/**
+ *  compareWord uses a binary search to serach for a word in the word list and returns true
+ *  if the inputed word matches a word in the list
+ *
+ *  @param string word -an inputed word that is compared against the word list to see if there is a matching word
+ *  @return boolean, -returns true if there is a matching word, returns false if there is no matching word
+ */
+bool Wordlist::compareWord(string word1)
+{ return binSearchWordList(wds,word1); }
+/**
+ * binSearchWordList changes the interface of binary search to have the user just enter in the vector and the list
+ * and then it automatically sets the bounds to make using the function easier. This function then calls the binary
+ * Search function with the correct bounds
+ *
+ * @param vector<string> wordlist -contains all the words that are to be compared to the grid
+ * @param - wordTarget -word that is being searched for to see if it exist.
+ * @return -returned boolean of either true if the word is in the list or false if it isn't
+ */
+bool Wordlist::binSearchWordList(vector <string> wordlist, string wordTarget)
+{ return binSearch(wds,wordTarget,0,wds.size()-1); }
+/**
+ * getVector() returns the vector which contains a list of words
+ * @return vector <string> -returns the vector that contains the word list
+ */
 vector <string> Wordlist::getVector()
 {
 	return wds;
@@ -104,86 +126,6 @@ ostream& operator<< (ostream &ostr, Wordlist w1)
 	//return the ostr with the temp string
 	return ostr << temp;
 
-}
-/**
- * quiSort(const vector <string> list) takes in a vector of type T and sorts it using quicksort
- * this is the quiSort function that the user will call because it has reduced arguments from the normal quickSort function
- */
-void Wordlist::quiSort()
-{
-	quickSort <string> (wds, 0 , wds.size());
-}
-/**
- * quickSort is a sorting algorithim that sorts the elements in the list from smallest to greater
- * This sorting algorithim is templated to support multiple data types
- * The < operator must be overloaded for certain data types to work namely strings
- * @
- */
-template <typename T>
-void Wordlist::quickSort(const vector <T> list, int left, int right)
-{
-	int s;
-	if(left < right)
-	{
-		s = partition <string> (list, left, right);
-		quickSort <string> (list , left, s-1);
-		quickSort <string> (list, s +1, right);
-	}
-}
-template <typename T>
-int Wordlist::partition(const vector <T> list, int left, int right)
-{
-	//set the pivot to the middle element of th elist
-	T pivot = list((left + right)/2);
-	//create a temperary variable for when the swaping needs to occur
-	T temp;
-	//set i as the left most element, so the beginning of the list
-	int i = left;
-	//set j as the right most element, so the last element in the current list
-	int j = right+1;
-	//loops while i is less then j because once i > j then the list has been fully partitioned
-	while(i <= j)
-	{
-		//if the value of the current value is less the then pivot then ignore it
-		while(list(i) < pivot)
-		{
-			i++;
-		}
-		//ignores cases where the value of the element to the left of the pivot is greater then the pivot
-		//because then it is in the correct spot already
-		while(list(j) < pivot)
-		{
-			j--;
-		}
-		//while the case that that i is still less the j then swap j and i because they are in the wrong
-		//locations
-		if(i <= j)
-		{
-			temp = list(i);
-			list(i) = list(j);
-			list(j) = temp;
-			i++;
-			j++;
-		}
-	}
-	return j;
-}
-bool operator< (const string lhs, const string rhs)
-{
-	int result;
-	result = lhs.compare(rhs);
-	if(result > 0)
-	{
-		return true;
-	}
-	else if(result <= 0)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
 }
 Wordlist::~Wordlist() {
 	// TODO Auto-generated destructor stub
