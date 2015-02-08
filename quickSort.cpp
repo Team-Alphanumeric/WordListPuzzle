@@ -11,9 +11,9 @@ using namespace std;
 
 
 
-void quickSort(vector <int>& list, int left, int right)
+template <typename T> void quickSort(vector <T>& list, int left, int right)
 {
-	int s;
+	T s;
 	if(left < right)
 	{
 		s = partition (list, left, right);
@@ -21,13 +21,13 @@ void quickSort(vector <int>& list, int left, int right)
 		quickSort (list, s +1, right);
 	}
 }
-int partition(vector <int>& list, int left, int right)
+template <typename T> int partition(vector <T>& list, int left, int right)
 {
-	//set the pivot to the middle element of th elist
+	//set the pivot to the middle element of the list
 	int pivot = list[(left + right)/2];
 	cout << "pivot value " <<pivot << endl;
-	//create a temperary variable for when the swaping needs to occur
-	int temp;
+	//create a temporary variable for when the swapping needs to occur
+	T temp;
 	//set i as the left most element, so the beginning of the list
 	int i = left;
 	//set j as the right most element, so the last element in the current list
