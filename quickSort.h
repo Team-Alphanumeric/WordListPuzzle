@@ -2,7 +2,7 @@
  * quickSort.h
  *
  *  Created on: Feb 5, 2015
- *      Author: alex
+ *      Author: Alex, Thurston
  */
 
 #ifndef QUICKSORT_H_
