@@ -98,7 +98,12 @@ bool Wordlist::existWord(string word1)
  * @return -returned boolean of either true if the word is in the list or false if it isn't
  */
 bool Wordlist::binSearchWordList(vector <string> wordlist, string wordTarget)
-{ return binSearch(wds,wordTarget,0,wds.size()-1); }
+{ return binSearch(wds,wordTarget,0,wds.size()-1,stringEqual); }
+
+bool Wordlist::prefix(string word1)
+{
+	return binSearch(wds,word1,0,wds.size()-1,stringPrefix);
+}
 /**
  * getVector() returns the vector which contains a list of words
  * @return vector <string> -returns the vector that contains the word list
