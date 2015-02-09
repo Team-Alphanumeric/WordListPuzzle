@@ -17,6 +17,7 @@ using namespace std;
 #include "binarySearch.h"
 #include "d_except.h"
 #include "mergeSort.h"
+#include <stdexcept>
 
 Wordlist::Wordlist()
 {
@@ -31,12 +32,16 @@ Wordlist::Wordlist(string filename)
 
 void Wordlist::sortList(int opt)
 {
+	try{
 	switch(opt)
 	{
 	case 2:	wds = mergeSort<string>(wds,0,wds.size()-1); break;
 	case 1: quickSort<string>(wds,0,wds.size()-1); break;
 	default: insertionSort<string>(wds); break;
-	}
+	}}
+	catch(invalid_argument &e)
+	{ cout << "invalid argument in sorting list" << e.what() << endl; }
+	catch(exception &e) { cout << "Unspecified Exception found: " << e.what() << endl; }
 }
 /** readWords: Member function of Wordlist
  *  readWords takes the given file and inputs all the words in that file into the vector wds which
@@ -72,6 +77,7 @@ void Wordlist::readWords(const string filename)
 	{
 		cout <<  "Exception opening/reading file in readWords function of Wordlist class:" << e.what();
 	}
+	catch(exception &e) { cout << "Unspecified Exception found: " << e.what() << endl; }
 }
 /**
  * getVectorSize() returns the current size of its data member wds.
@@ -101,20 +107,30 @@ string Wordlist::getWord(const int index)
  *  @return boolean, -returns true if there is a matching word, returns false if there is no matching word
  */
 bool Wordlist::existWord(string wordTarget)
-{ return binSearch(wds,wordTarget,0,wds.size()-1,stringEqual);  }
+{ 	try{
+	return binSearch(wds,wordTarget,0,wds.size()-1,stringEqual);}
+    catch(invalid_argument &e)
+	{ cout << "invalid argument in sorting list" << e.what() << endl; }
+    catch(exception &e) { cout << "Unspecified Exception found: " << e.what() << endl; } return false;}
 /**
  * prefix: searches for whether the given word is a prefix for any word in the wordlist
  * @param string bj - a string to check if it is a prefix
  */
 bool Wordlist::prefix(string bj)
 {
-	return binSearch(wds,bj,0,wds.size()-1,stringPrefix);
-}
+	try{
+	return binSearch(wds,bj,0,wds.size()-1,stringPrefix);}
+	catch(invalid_argument &e)
+	{ cout << "invalid argument in sorting list" << e.what() << endl; }
+	catch(exception &e) { cout << "Unspecified Exception found: " << e.what() << endl; } return false;}
 /**
  * getVector() returns the vector which contains a list of words
  * @return vector <string> -returns the vector that contains the word list
  */
-vector <string> Wordlist::getVector() { return wds; }
+vector <string> Wordlist::getVector() {
+	try{return wds;}
+    catch(const out_of_range& oor)
+	{ cout << "Out of Range Error when Retrieving word from Wordlist: " << oor.what(); return wds;}}
 
 //overloading operator for << that prints out all the words stored in the wordlist, aka wds vector
 ostream& operator<< (ostream &ostr, Wordlist w1)
@@ -171,6 +187,8 @@ template <typename T> void insertionSort(std::vector<T> &arr)
 
 template <typename T> void quickSort(vector <T>& list, int left, int right)
 {
+	if(left <0 || right >list.size())
+	{ throw invalid_argument("Invalid argument in mergeSort"); }
 	if(left < right)
 	{
 		int s = partition <T> (list, left, right);
@@ -182,6 +200,8 @@ template <typename T> void quickSort(vector <T>& list, int left, int right)
 
 template <typename T> int partition(vector <T>& list, int left, int right)
 {
+	if(left <0 || right >list.size())
+	{ throw invalid_argument("Invalid argument in mergeSort"); }
 	//set the pivot to the middle element of the list
 	int pivotindex = (left + right)/2;
 
@@ -193,7 +213,7 @@ template <typename T> int partition(vector <T>& list, int left, int right)
 
 	//set i and lessindex as the left most element, so the beginning of the list
 	//set j as the right most element, so the last element in the current list
-	int i = left, lessindex = left, j = right;
+	int i = left, lessindex = left;
 
 	// go through the list and move all values beneath the pivot to a lower index
 	// keep track of the lesser value indices
@@ -214,6 +234,8 @@ template <typename T> int partition(vector <T>& list, int left, int right)
 }
 template <typename T> vector<T> mergeSort(vector <T>& list, int left, int right)
 {
+	if(left <0 || right >list.size())
+	{ throw invalid_argument("Invalid argument in mergeSort"); }
 	// list to create values
 	vector<T> newlist;
 	if(right==left) { newlist.push_back(list[right]); }
