@@ -27,12 +27,16 @@ using namespace std;
 
 const int Grid::getSize() {return size;}
 
+// return the corresponding character: accepts negative indices up to the size of the dimension
 const char Grid::getChar(const int m, const int n)
 { return lttrs[(m+size) % size][(n+size) % size]; }
 
-Grid::Grid() {size = 0;}
+// initialize a grid to an empty grid
+Grid::Grid() {size = 0; lttrs.resize(0);}
 
+// initialize a grid with a txt file
 Grid::Grid(const string filename) { setGrid(filename); }
+
 // sets the grid to the values of the given file
 void Grid::setGrid(string filename)
 {
@@ -52,7 +56,11 @@ void Grid::setGrid(string filename)
 		{
 			for(int i=0; i < size ; i++)
 			{
-				gridfile >> lttrs[j][i];
+				// check that there are enough characters for the grid
+				if((gridfile.eof()) && (i<size-1) && (j<size-1))
+				{throw indexRangeError("In 'setGrid': grid size larger then number of characters")}
+
+				gridfile >> lttrs[j][i]; // enter letters into the file
 			}
 			cout<<endl;
 		}
@@ -60,22 +68,21 @@ void Grid::setGrid(string filename)
 	}
 	catch(ifstream::failure &e)
 	{
-		cout <<  "Exception opening/reading file in readWords function of Wordlist class:" << e.what();
+		cout <<  "In 'setGrid': unable to open/read file:\n" << e.what();
 	}
 }
 
+//this function returns an ostream with the string containing all the words
 ostream& operator<< (ostream &ostr, Grid gj)
 {
 	//declare constants
 	string temp = "";
 
-	//this puts all the words into one string with end line characters after each word
-	//this function returns an ostream with the string containing all the words
 	for(int i=0;i<gj.getSize();i++)
 	{
 		for(int j=0; j<gj.getSize(); j++)
 		{
-			ostr << gj.getChar(i,j) << " ";
+			ostr << gj.getChar(i,j) << " "; // enter the character into the grid
 		}
 		ostr << "\n";
 	}

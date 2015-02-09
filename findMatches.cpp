@@ -18,37 +18,38 @@ void findMatches(Wordlist w1, Grid gj)
 	int x,y; // values to define offset direction
 	int len=0; // length of the current word
 	char ch='\0'; // temporary character
-	// char *pch = &ch; // location of temporary character
-	bool remmatch=true; // whether possible matches are remaining
+	bool rem=true; // whether possible matches are remaining
 	string newword; // word created from letters in the grid
-	for(i=0;i<gj.getSize();i++)
+	for(i=0;i<gj.getSize();i++) // for every row
 	{
-		for(j=0;j<gj.getSize();j++)
+		for(j=0;j<gj.getSize();j++) // for every column
 		{
-			for(x=-1;x<=1;x++)
+			for(x=-1;x<=1;x++) // for every horizontal direction 
 			{
-				for(y=-1;y<=1;y++)
+				for(y=-1;y<=1;y++) // for every vertical direction
 				{
 					// create a new word starting from this position in the grid (length of word is 0)
 					newword.resize(0); len=0;
-					// default remaining matches? should be true:
-					// set 'remmatch' false only if direction is (0,0) to skip searching in null direction
-					remmatch = (x||y);
-					// build a new word by going through the grid and check it with the list
-					while(remmatch) // continue if there are still matches are remaining
+
+					// default remaining matches ('rem') should start as true when building new words
+					// set 'rem' false only if direction is (0,0) to skip searching in null direction
+					rem = (x||y);
+
+					// build a new word by going through the grid and checking the created word with the word list
+					while(rem) // continue if there are still matches are remaining
 					{
 						// add a character to the word
 						ch = (gj.getChar(i+(len*x),j+(len*y)));
 						newword.push_back(ch); len++;
-						// if it's at least 5 letters, check if it matches a specific word
+						
+						// if it's at least 5 letters, check if it matches anything
 						if(newword.size() >= 5)
 						{
-							// cout << "checking '" << newword <<"'\n";
-							// if it matches exactly, print it, then keep searching
-							if(w1.existWord(newword))
-							{ cout << newword << "\n"; remmatch=true; }
-							else // otherwise, see if there are other possible matches starting with this word
-							{ remmatch = w1.prefix(newword); }
+							// if it matches another word exactly, print it, then keep searching
+							if(w1.existWord(newword)) { cout << newword << "\n"; rem=true; }
+							
+							// otherwise, see if there are other possible matches starting with this word
+							else { rem = w1.prefix(newword); }
 						}
 					}
 				}
