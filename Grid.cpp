@@ -1,77 +1,84 @@
+/*
+ * Grid.cpp
+ *
+ *  Created on: Feb 8, 2015
+ *      Author: alex
+ */
+
+#include "Grid.h"
+
 /* Implements the grid class for a word search which holds and accesses a character matrix
 */
 
-#include <grid.h>
+#include "d_except.h"
+#include "matrix.h"
+#include "Grid.h"
 #include <iostream>
 #include <fstream>
+#include <stdio.h>
 #include <iomanip>
 #include <locale>
 #include <sstream>
 #include <string>
-#include <d_except.h>
-#include <d_matrix.h>
+#include <cstring>
 
-class Grid
-{
-	public:
-		Grid();
-		Grid(const string filename);
-		void setGrid(const string filename);
-		const char getChar(const int m, const int n);
-		const int getSize();
-		
-	protected:
-		matrix<char> lttrs;
-		int size;
-};
+using namespace std;
+
 
 const int Grid::getSize() {return size;}
 
 const char Grid::getChar(const int m, const int n)
-{ return lttrs[m][n]; }
+{ return lttrs[(m+size) % size][(n+size) % size]; }
 
 Grid::Grid() {size = 0;}
 
 Grid::Grid(const string filename) { setGrid(filename); }
 // sets the grid to the values of the given file
-void Grid::setGrid(const string filename)
+void Grid::setGrid(string filename)
 {
 	// open file
-	ifstream gridfile(filename);
-	// attempt to read line with size of file
-	string line;
-	if(gridfile.is_open())
-	{
-		getline(myfile,line); // read first line
-		char * pch =strtok(line," "); // split string by space character token
-		istringstream convert(pch); // stringstream used for the conversion constructed with the contents of 'pch' 
-                             		// ie: the stream will start containing the characters of 'pch'
-		if ( !(convert >> size) ) // give the value to 'size' using the characters in the stream
-    	{ throw fileError("Unable to read grid size!"); }    // if that fails, throw error
-	}
-	else { throw fileOpenError("Unable to open grid file!"); }
-	
-	// size the data vectors
-	lttrs.resize(size,size); // size number of rows and columns
+	ifstream gridfile(filename.c_str());
 
-	// read the characters from the rest of the file
-	char *ch; // temporary free character
-	for(int i=0;i<size,i++)
+	// get the size of the grid from the first line in the file
+	gridfile >> size >> size;
+
+	// resize the vectors according to the size of the grid
+	lttrs.resize(size); for(int i=0; i<size; i++) { lttrs[i].resize(size); }
+
+	for(int j=0; j < size; j++)
 	{
-		for(int j=0;j<size;j++)
+		for(int i=0; i < size ; i++)
 		{
-			gridfile.read(ch,1); // read a character
-			if(*ch = '\s') // ignore spaces
-			{ j--; } // move index back for spaces
-			else if((*ch = '\n') || (*ch = '\r')) // skip to next row if encountering new line or return 
-			{ break; } // move to next row
-			else
-			{ lttrs[i][j] = *ch; } // store character
-			// validate character
-			if((((int)(*ch)) < 97) || (((int)(*ch)) > 122)) { throw fileError("Warning: illegal character!"); }
+			gridfile >> lttrs[j][i];
 		}
+		cout<<endl;
 	}
-	if(!gridfile.eof()) { throw fileError("Warning: Not at end of file!"); }
-	// close file
-	gridfile.close();
 }
+
+ostream& operator<< (ostream &ostr, Grid gj)
+{
+	//declare constants
+	string temp = "";
+	// char ch[2] = " "; // temporary character
+
+	//this puts all the words into one string with end line characters after each word
+	//this function returns an ostream with the string containing all the words
+	for(int i=0;i<gj.getSize();i++)
+	{
+		for(int j=0; j<gj.getSize(); j++)
+		{
+			ostr << gj.getChar(i,j) << " ";
+		}
+		//temp.append("\n");
+		ostr << "\n";
+
+	}
+	//return the ostr with the temp string
+	return ostr;
+
+}
+
+Grid::~Grid() {
+	// TODO Auto-generated destructor stub
+}
+
