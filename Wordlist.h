@@ -2,7 +2,7 @@
  * Wordlist.h
  *
  *  Created on: Feb 4, 2015
- *      Author: alex
+ *      Author: Alex, Thurston
  */
 
 #ifndef WORDLIST_H_
@@ -10,24 +10,25 @@
 #include <iostream>
 using namespace std;
 #include <vector>
+#include "insertionSort.h"
+#include "quickSort.h"
 
 class Wordlist {
 protected:
 	vector <string> wds;
 public:
 	Wordlist();
+	Wordlist(string filename);
 	void readWords(string filename);
 	void printWords();
 	int getVectorSize();
+	bool binSearchWordList(vector <string> wordlist, string wordTarget);
 	vector <string> getVector();
-	template <typename T>
-	void quickSort(const vector <T> list, int left, int right);
-	void quiSort();
-	template <typename T>
-	int partition(const vector <T> list, int left, int right);
+	bool existWord(string word1);
+	bool prefix(string word1);
+	void sortList(int opt=0);
 	string getWord(const int index);
-	friend ostream& operator << (ostream &ostr, Wordlist w1);
-	friend bool operator< (const string lhs, string rhs);
+	friend ostream& operator<< (ostream &ostr, Wordlist w1);
 	virtual ~Wordlist();
 };
 
