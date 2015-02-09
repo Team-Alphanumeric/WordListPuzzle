@@ -38,20 +38,29 @@ void Grid::setGrid(string filename)
 {
 	// open file
 	ifstream gridfile(filename.c_str());
-
-	// get the size of the grid from the first line in the file
-	gridfile >> size >> size;
-
-	// resize the vectors according to the size of the grid
-	lttrs.resize(size); for(int i=0; i<size; i++) { lttrs[i].resize(size); }
-
-	for(int j=0; j < size; j++)
+	gridfile.exceptions (ifstream::failbit | ifstream::badbit);
+	try
 	{
-		for(int i=0; i < size ; i++)
+
+		// get the size of the grid from the first line in the file
+		gridfile >> size >> size;
+
+		// resize the vectors according to the size of the grid
+		lttrs.resize(size); for(int i=0; i<size; i++) { lttrs[i].resize(size); }
+
+		for(int j=0; j < size; j++)
 		{
-			gridfile >> lttrs[j][i];
+			for(int i=0; i < size ; i++)
+			{
+				gridfile >> lttrs[j][i];
+			}
+			cout<<endl;
 		}
-		cout<<endl;
+		gridfile.close();
+	}
+	catch(ifstream::failure &e)
+	{
+		cout <<  "Exception opening/reading file in readWords function of Wordlist class:" << e.what();
 	}
 }
 
@@ -59,7 +68,6 @@ ostream& operator<< (ostream &ostr, Grid gj)
 {
 	//declare constants
 	string temp = "";
-	// char ch[2] = " "; // temporary character
 
 	//this puts all the words into one string with end line characters after each word
 	//this function returns an ostream with the string containing all the words
@@ -69,9 +77,7 @@ ostream& operator<< (ostream &ostr, Grid gj)
 		{
 			ostr << gj.getChar(i,j) << " ";
 		}
-		//temp.append("\n");
 		ostr << "\n";
-
 	}
 	//return the ostr with the temp string
 	return ostr;
