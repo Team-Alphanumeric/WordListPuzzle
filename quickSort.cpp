@@ -9,56 +9,49 @@ using namespace std;
 #include <vector>
 #include "quickSort.h"
 
-template <typename T>
-void quickSort (vector <T>& list, int left, int right)
+
+
+template <typename T> void quickSort(vector <T>& list, int left, int right)
 {
 	int s;
 	if(left < right)
 	{
-		s = partition (list, left, right);
-		quickSort (list , left, s-1);
-		quickSort (list, s +1, right);
+		s = partition <T> (list, left, right);
+		quickSort <T> (list , left, s-1);
+		quickSort <T> (list, s+1, right);
 	}
 }
-
-template <typename T>
-int partition (vector <T>& list, int left, int right)
+template <typename T> int partition(vector <T>& list, int left, int right)
 {
 	//set the pivot to the middle element of the list
-	int pivot = list[(left + right)/2];
-	cout << "pivot value " <<pivot << endl;
-	//create a temporary variable for when the swapping needs to occur
-	int temp;
-	//set i as the left most element, so the beginning of the list
-	int i = left;
+	int pivotindex = (left + right)/2;
+
+	T pivot = list[pivotindex];
+	cout << "pivot value: " <<pivot << "size: "<<right-left+1<< endl;
+
+	// put the pivot value at the end of the sub array
+	T temp = list[pivotindex]; list[pivotindex]=list[right]; list[right]=temp;
+
+	//set i and lessindex as the left most element, so the beginning of the list
 	//set j as the right most element, so the last element in the current list
-	int j = right+1;
-	//loops while i is less then j because once i > j then the list has been fully partitioned
-	while(i <= j)
+	int i = left, lessindex = left, j = right;
+
+	// go through the list and move all values beneath the pivot to a lower index
+	// keep track of the lesser value indices
+	for(i=0;i<right;i++)
 	{
-		//if the value of the current value is less the then pivot then ignore it
-		while(list[i] < pivot)
+		if(list[i] <= pivot)
 		{
-			i++;
-		}
-		//ignores cases where the value of the element to the left of the pivot is greater then the pivot
-		//because then it is in the correct spot already
-		while(list[j] > pivot)
-		{
-			j--;
-		}
-		//while the case that that i is still less the j then swap j and i because they are in the wrong
-		//locations
-		if(i <= j)
-		{
-			temp = list[i];
-			list[i] = list[j];
-			list[j] = temp;
-			i++;
-			j++;
+			temp           = list[i];
+			list[i]        = list[lessindex];
+			list[lessindex]= temp;
+			lessindex++;
 		}
 	}
-	return j;
+	temp           = list[lessindex];
+	list[lessindex]= list[right];
+	list[right]    = temp;
+	return lessindex;
 }
 
 
