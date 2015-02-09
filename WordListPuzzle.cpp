@@ -16,6 +16,6 @@ using namespace std;
 
 int main(void)
 {
-	search(1, 15);
+	search(2, 15);
 	return 0;
 }
