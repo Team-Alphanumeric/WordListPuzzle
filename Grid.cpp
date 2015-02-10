@@ -71,7 +71,6 @@ void Grid::setGrid(string filename)
 
 				gridfile >> lttrs[j][i]; // enter letters into the file
 			}
-			cout<<endl;
 		}
 		gridfile.close();
 	}
