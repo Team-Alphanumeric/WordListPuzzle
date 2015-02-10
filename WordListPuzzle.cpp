@@ -25,8 +25,8 @@ int main(void)
 	{
 		// execute a search
 		// arg1: 0 -> insertion sort, 1 -> quick sort, 2-> merge sort
-		// arg2: size of grid: 15,30,50,250
-		search(2, 15);
+		// arg2: the puzzle number, 1-8, with puzzle size, 15,30,50,50,100,250,500,1000
+		search(2, 8);
 		return 0;
 	}
 	catch(exception &e)
