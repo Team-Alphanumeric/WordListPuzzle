@@ -24,7 +24,7 @@ void findMatches(Wordlist w1, Grid gj)
 	{
 		for(j=0;j<gj.getSize();j++) // for every column
 		{
-			for(x=-1;x<=1;x++) // for every horizontal direction 
+			for(x=-1;x<=1;x++) // for every horizontal direction
 			{
 				for(y=-1;y<=1;y++) // for every vertical direction
 				{
@@ -41,13 +41,13 @@ void findMatches(Wordlist w1, Grid gj)
 						// add a character to the word
 						ch = (gj.getChar(i+(len*x),j+(len*y)));
 						newword.push_back(ch); len++;
-						
+
 						// if it's at least 5 letters, check if it matches anything
 						if(newword.size() >= 5)
 						{
 							// if it matches another word exactly, print it, then keep searching
 							if(w1.existWord(newword)) { cout << newword << "\n"; rem=true; }
-							
+
 							// otherwise, see if there are other possible matches starting with this word
 							else { rem = w1.prefix(newword); }
 						}
