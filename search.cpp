@@ -21,7 +21,7 @@ void search(const int sortType, const int gridsize=15)
 {
 	// declare a string which holds the file name
 	std::string gridname;
-	
+
 	//switch statement to decide the size of the grid based off the integer inputed by the user
 	if(gridsize<0) {throw invalid_argument("in 'search': invalid argument"); }
 	switch(gridsize)
@@ -40,10 +40,10 @@ void search(const int sortType, const int gridsize=15)
 
 	// sort the list based off the inputed value: 0= InsertionSort, 1=QuickSort, 2=mergeSort
 	w.sortList(sortType); sorttime = clock(); // get the time after sorting
-	
+
 	// find matches in the sorted wordlist
 	findMatches(w,g); searchtime = clock(); // get the time after searching
-	
+
 	// print out time spent for each operation
 	cout << "Sorting Time: " << (float) (sorttime-start)/CLOCKS_PER_SEC << "s" << endl;
 	cout << "Search Time: " <<  (float) (searchtime-sorttime)/CLOCKS_PER_SEC << "s" << endl;
