@@ -1,7 +1,7 @@
 //============================================================================
 // Name        : WordListPuzzle.cpp
 // Author      : Alex Agudelo, Thurston Brevett
-// Version     :
+// Version     : Project 2a
 // Copyright   :
 // Description : Executes a word search on a grid of letters corresponding to
 // 				 a list of words
