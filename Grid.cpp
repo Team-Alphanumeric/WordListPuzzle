@@ -21,8 +21,9 @@
 #include <sstream>
 #include <string>
 #include <cstring>
-
 using namespace std;
+#include <exception>
+#include "d_except.h"
 
 
 const int Grid::getSize() {return size;}
@@ -35,7 +36,13 @@ const char Grid::getChar(const int m, const int n)
 Grid::Grid() {size = 0; lttrs.resize(0);}
 
 // initialize a grid with a txt file
-Grid::Grid(const string filename) { setGrid(filename); }
+Grid::Grid(const string filename)
+{
+	try{ setGrid(filename);	}
+	catch( indexRangeError &e)
+	{ cout << "Invalid Range Error at " << e.what() << endl; }
+
+}
 
 // sets the grid to the values of the given file
 void Grid::setGrid(string filename)
@@ -58,7 +65,9 @@ void Grid::setGrid(string filename)
 			{
 				// check that there are enough characters for the grid
 				if((gridfile.eof()) && (i<size-1) && (j<size-1))
-				{throw indexRangeError("In 'setGrid': grid size larger then number of characters")}
+				{
+					throw indexRangeError("In 'setGrid': grid size larger then number of characters", i, j );
+				}
 
 				gridfile >> lttrs[j][i]; // enter letters into the file
 			}
