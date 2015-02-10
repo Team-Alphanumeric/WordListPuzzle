@@ -9,20 +9,22 @@
 using namespace std;
 #include <string>
 #include <vector>
+#include "d_except.h"
+
 
 bool binSearch(vector <string> wordlist, string wordTarget, int low, int high, bool (*op)(string,string))
 {
 	// determine partition bounds
 	int mid = ((low + high)/2);
-	
+
 	if(low > high)	{ return false;	}  // base case: index out of bounds, not here
 
 	// double check partition bounds
-	if((low<0) || (low>=wordlist.size()) {throw indexRangeError("In 'binSearch': Lower index out of bounds"); }
-	if((mid<0) || (mid>=wordlist.size()) {throw indexRangeError("In 'binSearch': Middle index out of bounds"); }
-	if((high<0) || (high>=wordlist.size()) {throw indexRangeError("In 'binSearch': Upper index out of bounds"); }
-	
-	
+	if((low<0) || (low>=wordlist.size())) {throw indexRangeError("In 'binSearch': Lower index out of bounds", low, wordlist.size());}
+	if((mid<0) || (mid>=wordlist.size())) {throw indexRangeError("In 'binSearch': Middle index out of bounds",low, wordlist.size()); }
+	if((high<0) || (high>=wordlist.size())) {throw indexRangeError("In 'binSearch': Upper index out of bounds",low, wordlist.size()); }
+
+
 	if((*op) (wordTarget, wordlist[mid])) { return true; } // success of operand: found it!
 	else
 	{
