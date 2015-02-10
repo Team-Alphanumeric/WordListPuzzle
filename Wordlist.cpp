@@ -63,7 +63,7 @@ void Wordlist::readWords(const string filename)
 		while(!myFile.eof())
 		{
 			// enter a line into the temporary variable and then add it to the list
-			wds.push_back((getline(myFile,temp),temp)); 
+			wds.push_back((getline(myFile,temp),temp));
 		}
 		//close the file once all the words have been transfered into the data member wds.
 		myFile.close();
@@ -90,12 +90,13 @@ int Wordlist::getVectorSize() { return wds.size(); }
  * @ param int index -the number of the index in wds to select
  * @ return - returns the word at that index
  */
- 
+
 string Wordlist::getWord(const int index)
 {
 	try{return wds[index];}
 	catch(const out_of_range& oor)
 	{ cout << "In 'Wordlist' method 'getWord': Out of Range Error retrieving word from wordlist:\n" << oor.what();}
+	return "";
 }
 /**
  *  compareWord uses a binary search to serach for a word in the word list and returns true
@@ -108,13 +109,13 @@ bool Wordlist::existWord(string wordTarget)
 {
 	// search for a matching word in the wordlist
  	try { return binSearch(wds,wordTarget,0,wds.size()-1,stringEqual); }
-    
+
 	// report invalid argument errors
 	catch(invalid_argument &e)
 	{ cout << "In 'Wordlist' method 'existWord: invalid argument:\n" << e.what() << endl; }
-    
+
 	catch(exception &e) { cout << "In 'Wordlist' method 'existWord: unspecified exception:\n " << e.what() << endl; }
-	
+
 	return false;
 }
 /**
@@ -124,13 +125,13 @@ bool Wordlist::existWord(string wordTarget)
 bool Wordlist::prefix(string bj)
 {
 	try { return binSearch(wds,bj,0,wds.size()-1,stringPrefix); }
-	
+
 	catch(invalid_argument &e)
 	{ cout << "In 'Wordlist' method 'prefix': invalid argument:\n" << e.what() << endl; }
-	
+
 	catch(exception &e)
-	{ cout << "In 'Wordlist' method 'prefix': unspecified exception:\n" << e.what() << endl; } 
-	
+	{ cout << "In 'Wordlist' method 'prefix': unspecified exception:\n" << e.what() << endl; }
+
 	return false;
 }
 /**
@@ -153,7 +154,7 @@ ostream& operator<< (ostream &ostr, Wordlist w1)
 	//stored in one string
 	for(int i=0;i<w1.getVectorSize();i++)
 	{ temp.append(w1.getWord(i)); temp.append("\n"); }
-	
+
 	//return the ostr with the temp string
 	return ostr << temp;
 }
@@ -236,12 +237,12 @@ template <typename T> int partition(vector <T>& list, int left, int right)
 			lessindex++;
 		}
 	}
-	
+
 	// return the pivot to it's place
 	temp           = list[lessindex];
 	list[lessindex]= list[right];
 	list[right]    = temp;
-	
+
 	// return the index used to sort to the to sides
 	return lessindex;
 }
@@ -251,18 +252,18 @@ template <typename T> vector<T> mergeSort(vector <T>& list, int left, int right)
 {
 	if((left < 0) || (right >= list.size()))
 	{ throw invalid_argument("In 'mergeSort': invalid argument\n"); }
-	
+
 	// new list to add values
 	vector<T> newlist;
-	
+
 	// base case: if given range of 1, push the single item into the list
 	if(right==left) { newlist.push_back(list[right]); }
 
-	// check for base case: length of list is invalid: array is sorted as a single object or empty 
+	// check for base case: length of list is invalid: array is sorted as a single object or empty
 	if((right-left)<=0) {return newlist;}
 
 	/* break the array into two (~equal) parts and sort them */
-	
+
 	int center = (right+left)/2;
 	vector<T> lhlist = mergeSort(list,left,center);
 	vector<T> rhlist = mergeSort(list,center+1,right);
