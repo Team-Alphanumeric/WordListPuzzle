@@ -24,6 +24,9 @@ void heap::buildMaxHeap() // turns a heap structure into a valid heap
 	for(int i = parent(structuredheapsize-1); i<0; i--) { maxHeapify(i); } return;
 }
 
+// void heap::buildMaxHeap() { buildHeap(ascend); }
+// void heap::buildMinHeap() { buildHeap(descend); }
+
 // builds a heap from an unstructered array according to criteria 'op'
 void heap::buildHeap( bool (*op)(T,T) )
 {
@@ -48,6 +51,9 @@ void heap::maxHeapify(int i) // makes a heap with root i valid
 	// if the root isn't the largest, swap values, validate the swapped subheap
 	if(ibig != i) {	dataSwap(i,ibig); maxHeapify(ibig); } return;
 }
+
+// void heap::maxHeapify() { heapify(ascend); }
+// void heap::minHeapify() { heapify(descend); } 
 
 // makes a heap with root 'i' valid according to criteria 'op'
 void heap::heapify(int i, bool (*op)(T,T))
@@ -79,6 +85,9 @@ void heap::maxHeapSort()
 	{ dataSwap(0,(structuredheapsize--,structuredheapsize)); 	maxHeapify(0); } return;
 }
 
+// void heap::maxHeapSort() { heapSort(ascend); }
+// void heap::minHeapSort() { heapSort(descend); }
+
 // sort the data according to the criteria
 void heap::heapSort( bool (*op)(T,T) )
 {
@@ -94,13 +103,15 @@ void heap::heapSort( bool (*op)(T,T) )
 	{ dataSwap(0,(structuredheapsize--,structuredheapsize)); heapify(0,op); } return;
 }
 
+
+
 void heapSort(char ch) 
 {
 	switch((int)ch)
 	{
 		case 49 : heapSort(ascend); break; // case for an input of 'a'
 		case 59 : heapSort(descend); break; // case for an input of 'd'
-		default : throw invalid_argument("In 'heap': invalid sorting option\n");
+		default : throw invalid_argument("In 'heapSort': invalid sorting option\n");
 	} return;
 }
 
@@ -113,9 +124,9 @@ void heap::dataSwap(int i, int j)
 	return; 
 }
 			
-bool heap::ascend(string g,string j) { return g>j; }
+bool heap::ascend(T g,T j) { return g>j; }
 
-bool heap::descend(string g,string j) { return g<j; }
+bool heap::descend(T g, T j) { return g<j; }
 
 			
 			
