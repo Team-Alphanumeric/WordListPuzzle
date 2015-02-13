@@ -20,7 +20,7 @@ void heap::buildMaxHeap() // turns a heap structure into a valid heap
 	- initialize heap structure size to full array of data
 	- move from last index with children to first index creating valid heaps
 	*/
-	structuredheapsize = data.size(); 
+	structuredheapsize = data.size(); if(!data.size()) {return;} // empty heap base case 
 	for(int i = parent(structuredheapsize-1); i<0; i--) { maxHeapify(i); } return;
 }
 
@@ -31,32 +31,33 @@ void heap::buildHeap( bool (*op)(T,T) )
 	- initialize heap structure size to full array of data
 	- move from last index with children to first index creating valid heaps
 	*/
-	structuredheapsize = data.size(); 
+	structuredheapsize = data.size(); if(!data.size()) {return;} // empty heap base case
 	for(int i = parent(structuredheapsize-1); i<0; i--) { heapify(i,op); } return;
 }
 // creates a maximum root heap of root i
 /* in the future, this should just call 'heapify' */
 void heap::maxHeapify(int i) // makes a heap with root i valid
 {
+	if(i<0) {throw invalid_argument("In 'maxHeapify': invalid index\n");}
 	int l = left(i), r=right(i); // left, right index: valid if >= 0 
 	T big=data[i]; int ibig=i; // largest value and coresponding index: defaults to root
 	
-	if((r>=0) && (data[r]>big)) {big=data[r]; ibig=r;} // find largest node/node-index
-	if((l>=0) && (data[l]>big)) {big=data[l]; ibig=l;}
+	if((r>=0) && (data[r]>big)) { big=data[r]; ibig=r;} // check if index is valid first
+	if((l>=0) && (data[l]>big)) { big=data[l]; ibig=l;} // then find largest node/node-index
 	
-	if(ibig != i) // if the root isn't the largest
-	{	dataSwap(i,ibig); maxHeapify(ibig); } // swap values, validate the swapped subheap
-	return;
+	// if the root isn't the largest, swap values, validate the swapped subheap
+	if(ibig != i) {	dataSwap(i,ibig); maxHeapify(ibig); } return;
 }
 
 // makes a heap with root 'i' valid according to criteria 'op'
 void heap::heapify(int i, bool (*op)(T,T))
 {
+	if(i<0) {throw invalid_argument("In 'heapify': invalid index\n");}
 	int l = left(i), r = right(i); // left, right index: valid if >= 0 
 	T big=data[i]; int ibig=i; // largest value and coresponding index: defaults to root
 	
-	if( (r>=0) && (*op)(data[r],big) ) { big=data[r]; ibig=r;} // find largest node/node-index
-	if( (l>=0) && (*op)(data[l],big) ) { big=data[l]; ibig=l;}
+	if( (r>=0) && (*op)(data[r],big) ) { big=data[r]; ibig=r;} // check if index is valid first
+	if( (l>=0) && (*op)(data[l],big) ) { big=data[l]; ibig=l;} // then find largest node/node-index
 	
 	// if the root isn't the largest swap values and validate the subheap of the swapped value
 	if(ibig != i) {	dataSwap(i,ibig); heapify(ibig,op); } 	return;
@@ -90,12 +91,31 @@ void heap::heapSort( bool (*op)(T,T) )
 	*/
 	structuredheapsize = data.size(); buildHeap(op);
 	for(int i = structuredheapsize-1; i<0; i--)
-	{ dataSwap(0,(structuredheapsize--,structuredheapsize)); 	heapify(0,op); } return;
+	{ dataSwap(0,(structuredheapsize--,structuredheapsize)); heapify(0,op); } return;
+}
+
+void heapSort(char ch) 
+{
+	switch((int)ch)
+	{
+		case 49 : heapSort(ascend); break; // case for an input of 'a'
+		case 59 : heapSort(descend); break; // case for an input of 'd'
+		default : throw invalid_argument("In 'heap': invalid sorting option\n");
+	} return;
 }
 
 // swap values of data
 void heap::dataSwap(int i, int j)
-{ T temp = data[i];	data[i] = data[j];	data[j] = temp;	return; } /* swap values */ 			
+{ 
+	if(i>=data.size() || j>=data.size() || i<0 || j<0) // check indexing boundaries
+	{ throw out_of_range("In 'dataSwap': index out of bounds"); }
+	T temp = data[i];	data[i] = data[j];	data[j] = temp; 
+	return; 
+}
 			
+bool heap::ascend(string g,string j) { return g>j; }
+
+bool heap::descend(string g,string j) { return g<j; }
+
 			
 			

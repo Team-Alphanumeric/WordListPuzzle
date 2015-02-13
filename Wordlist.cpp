@@ -294,4 +294,3 @@ template <typename T> vector<T> mergeSort(vector <T>& list, int left, int right)
 	return newlist;
 }
 
-
