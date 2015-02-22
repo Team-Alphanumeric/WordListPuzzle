@@ -2,7 +2,7 @@
  * Grid.cpp
  *
  *  Created on: Feb 8, 2015
- *      Author: alex
+ *      Author: Alex, Thurston
  */
 
 #include "Grid.h"
@@ -30,7 +30,7 @@ const int Grid::getSize() {return size;}
 
 // return the corresponding character: accepts negative indices up to the size of the dimension
 const char Grid::getChar(const int m, const int n)
-{ return lttrs[(m+size) % size][(n+size) % size]; }
+{ return lttrs[(m+size+size) % size][(n+size+size) % size]; }
 
 // initialize a grid to an empty grid
 Grid::Grid() {size = 0; lttrs.resize(0);}
