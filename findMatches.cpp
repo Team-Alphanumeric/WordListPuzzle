@@ -48,8 +48,13 @@ void findMatches(Wordlist w1, Grid gj)
 							// if it matches another word exactly, print it, then keep searching
 							if(w1.existWord(newword)) { cout << newword << "\n"; rem=true; }
 
-							// otherwise, see if there are other possible matches starting with this word
-							else { rem = w1.prefix(newword); }
+							/* otherwise, see if there are other possible matches starting with this word:
+							   if data type is 0 (vector) then use the 'prefix' function to determine matches
+							   if data type is 1 (hash table) then use the 'validLength' function to determine
+							   if the word is short enough for the word list and is shorter than the grid size
+							   to prevent wrap around words */
+							else
+							{	rem = (w1.getDataType()) ? (w1.validLength(newword) && (newword.length() < gj.getSize())) : w1.prefix(newword);	}
 						}
 					}
 				}
