@@ -21,13 +21,19 @@ void  LinkList::insertItem(string newWord) {
 		head -> pNext = newItem;
 		length++; return;
 	}
-	else {
+	else
+	{
 		sName * conductor; sName * nextList;
 		conductor = head; nextList = head;
-		while(conductor -> pNext)
+		cout << "test" << endl;
+		while(conductor -> pNext != NULL)
 		{
-			nextList = conductor;
-			conductor = nextList ->pNext;
+			//nextList = conductor;
+			//conductor = nextList ->pNext;
+			conductor = conductor ->pNext;
+			cout << "test2" << endl;
+			cout << "conductor pointer " << conductor << endl;
+			cout << "next conductor pointer " << conductor -> pNext << endl;
 		}
 		conductor -> pNext = newItem; newItem -> pNext = NULL;
 		length++;
@@ -98,7 +104,7 @@ void LinkList::printList()
 		conductor = nextList -> pNext;
 	}
 	cout << endl;
-	cout << "test2" << endl;
+	//cout << "test2" << endl;
 }
 int LinkList::getLength()
 {
