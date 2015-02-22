@@ -20,7 +20,10 @@ using namespace std;
 
 // initialize to an empty list
 Wordlist::Wordlist()
-{ wds.resize(0); }
+{ wds.resize(0);
+  wdsHs.setHashTableSize(15000);
+  dataType = 0;
+  longWordLength=0;}
 
 // initialize with a file
 Wordlist::Wordlist(string filename)
@@ -75,6 +78,64 @@ void Wordlist::readWords(const string filename)
 	}
 	catch(exception &e) { cout << "In 'Wordlist' method 'readWords':\n" << e.what() << endl; }
 }
+//set the data type member data, so that the class knows which data type to deal with
+void Wordlist::setDataType(int newDataType)
+{
+	dataType = newDataType;
+}
+//return the current data type of the word list
+int Wordlist::getDataType()
+{
+	return dataType;
+}
+void Wordlist::readWordsHash(string filename)
+{
+	string temp;
+	string word1;
+
+	//open myFile which is the file inputed and creates an instream for that file
+	ifstream myFile(filename.c_str());
+
+	//tests the ability to open the file, if the file is able to be opened, then it starts storing the data
+	//otherwise it throws an exception
+	myFile.exceptions (ifstream::failbit | ifstream::badbit);
+	try
+	{
+		// while loop runs as long as not at the end of the file
+		while(!myFile.eof())
+		{
+			//for(int i=0; i<wdsHs.getLength();i++)
+			//{
+				word1 = (getline(myFile,temp),temp);
+				if(word1.length() > longWordLength)
+				{
+					longWordLength = word1.length();
+				}
+				if(word1.length() >= 5)
+				{
+					wdsHs.insertItem(word1);
+				}
+			//}
+		}
+		//close the file once all the words have been transfered into the data member wds.
+		myFile.close();
+	}
+	//catch statement sees if an error is thrown whether the file can be read or not
+	catch(ifstream::failure &e)
+	{
+		cout <<  "In 'Wordlist' method 'readWords': Error opening/reading file:\n" << e.what();
+		cout << "The location " << word1 << endl;
+	}
+	catch(exception &e) { cout << "In 'Wordlist' method 'readWords':\n" << e.what() << endl; }
+	//wdsHs.printHistogram();
+	//wdsHs.largestList();
+
+}
+//returns whether the current word is longer then any of the words in the wordlist
+bool Wordlist::validLength(string word)
+{
+	return word.length() < longWordLength;
+}
 
 /**
  * getVectorSize() returns the current size of its data member wds.
@@ -107,31 +168,46 @@ string Wordlist::getWord(const int index)
  */
 bool Wordlist::existWord(string wordTarget)
 {
-	// search for a matching word in the wordlist
- 	try { return binSearch(wds,wordTarget,0,wds.size()-1,stringEqual); }
+	if(dataType==1)
+	{
+		try { return wdsHs.getItemByKey(wordTarget); }
+		catch(...) { cout << "in 'existWord': unable to check word"; }
+	}
+	if(dataType==0)
+	{
+		// search for a matching word in the wordlist
+		try { return binSearch(wds,wordTarget,0,wds.size()-1,stringEqual); }
 
-	// report invalid argument errors
-	catch(invalid_argument &e)
-	{ cout << "In 'Wordlist' method 'existWord: invalid argument:\n" << e.what() << endl; }
+		// report invalid argument errors
+		catch(invalid_argument &e)
+		{ cout << "In 'Wordlist' method 'existWord: invalid argument:\n" << e.what() << endl; }
 
-	catch(exception &e) { cout << "In 'Wordlist' method 'existWord: unspecified exception:\n " << e.what() << endl; }
+		catch(exception &e) { cout << "In 'Wordlist' method 'existWord: unspecified exception:\n " << e.what() << endl; }
 
+		return false;
+	}
 	return false;
 }
+
+unsigned int Wordlist::getLongWordLength() {return longWordLength;}
 /**
  * prefix: searches for whether the given word is a prefix for any word in the wordlist
  * @param string bj - a string to check if it is a prefix
  */
 bool Wordlist::prefix(string bj)
 {
-	try { return binSearch(wds,bj,0,wds.size()-1,stringPrefix); }
+	if(dataType==0)
+	{
+		try { return binSearch(wds,bj,0,wds.size()-1,stringPrefix); }
 
-	catch(invalid_argument &e)
-	{ cout << "In 'Wordlist' method 'prefix': invalid argument:\n" << e.what() << endl; }
+		catch(invalid_argument &e)
+		{ cout << "In 'Wordlist' method 'prefix': invalid argument:\n" << e.what() << endl; }
 
-	catch(exception &e)
-	{ cout << "In 'Wordlist' method 'prefix': unspecified exception:\n" << e.what() << endl; }
+		catch(exception &e)
+		{ cout << "In 'Wordlist' method 'prefix': unspecified exception:\n" << e.what() << endl; }
 
+		return false;
+	}
 	return false;
 }
 /**
