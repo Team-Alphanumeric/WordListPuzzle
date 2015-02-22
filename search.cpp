@@ -39,15 +39,33 @@ void search(const int sortType, const int puzzleNum=1)
 	cout << "Searching Puzzle " << gridname << endl;
 	//declare classes
 	Grid g(gridname);
-	Wordlist w("wordList.txt");
+	// if statement differentiates which data structure is being used.
+	// If the sorting type will be insertion sort ,quick sort, or merge sort then
+	// the data will be read into a vector then sorted, if it is the hash table, then the
+	// elements need to be entered into the hash table using the hash function
 
-	clock_t start = clock(), sorttime, searchtime;
+	clock_t start, sorttime, searchtime;
+	if(sortType == 3)
+	{
+		Wordlist w;
+		w.setDataType(1); start = clock();
+		w.readWordsHash("wordList.txt"); sorttime = clock();
+		findMatches(w,g); searchtime = clock(); // get the time after searching
 
-	// sort the list based off the inputed value: 0= InsertionSort, 1=QuickSort, 2=mergeSort
-	w.sortList(sortType); sorttime = clock(); // get the time after sorting
 
-	// find matches in the sorted wordlist
-	findMatches(w,g); searchtime = clock(); // get the time after searching
+
+	}
+	else
+	{
+		Wordlist w("wordList.txt");
+		w.setDataType(0); start = clock();
+		// sort the list based off the inputed value: 0= InsertionSort, 1=QuickSort, 2=mergeSort
+		w.sortList(sortType); sorttime = clock(); // get the time after sorting
+
+		// find matches in the sorted wordlist
+		findMatches(w,g); searchtime = clock(); // get the time after searching
+
+	}
 
 	// print out time spent for each operation
 	cout << "Sorting Time: " << (float) (sorttime-start)/CLOCKS_PER_SEC << "s" << endl;
