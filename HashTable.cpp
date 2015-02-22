@@ -15,7 +15,7 @@ using namespace std;
 
 HashTable::HashTable(int tableLength) {
 	// TODO Auto-generated constructor stub
-	if(tableLength <= 0) tableLength =15;
+	if(tableLength <= 0) tableLength = 15;
 	array = new LinkList[ tableLength ];
 	length = tableLength;
 
@@ -45,13 +45,13 @@ int HashTable::hash( string itemKey)
 		}
 		//cout << "test spot ";
 	}
-	//cout << "Word" << itemKey << endl;
+	cout << "Word " << itemKey << endl;
 	result += (int)itemKey[1];
 	result += (int)itemKey[2];
 	//result += (int)itemKey[3];
-	result -= (int)itemKey[4];
+	//result -= (int)itemKey[4];
 	result = result % 2000;
-	//cout << "result" << result << endl;
+	cout << "result " << result << endl;
 	return result;
 
 }
@@ -80,7 +80,9 @@ void HashTable::largestList()
 void HashTable::insertItem(string word)
 {
 	int location = hash(word);
-	//cout << "Location " << location << endl;
+	cout << "Location " << location << endl;
+	array[location].printList();
+	cout << "Another test" << endl;
 	array[location].insertItem(word);
 	//array[location].printList();
 }
