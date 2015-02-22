@@ -47,6 +47,7 @@ void search(const int sortType, const int puzzleNum=1)
 	clock_t start, sorttime, searchtime;
 	if(sortType == 3)
 	{
+		cout<<"Hellur!\n";
 		Wordlist w;
 		w.setDataType(1); start = clock();
 		w.readWordsHash("wordList.txt"); sorttime = clock();
