@@ -5,6 +5,7 @@
  *      Author: Alex, Thurston
  */
 
+#include "heap.h"
 #include "Wordlist.h"
 #include "binarySearch.h"
 #include "d_except.h"
@@ -20,8 +21,8 @@ using namespace std;
 
 // initialize to an empty list
 Wordlist::Wordlist()
-{ wds.resize(0);
-  wdsHs.setHashTableSize(15000);
+{ wds.resize(0); cout<<"hi\n";
+  wdsHs.setHashTableSize(10000); cout<<"wut?\n";
   dataType = 0;
   longWordLength=0;}
 
@@ -34,9 +35,10 @@ void Wordlist::sortList(int opt)
 	try{
 		switch(opt)
 		{
-		case 2:	wds = mergeSort<string>(wds,0,wds.size()-1); break;
-		case 1: quickSort<string>(wds,0,wds.size()-1); break;
-		default: insertionSort<string>(wds); break;
+			case 4: { Heap hp(wds); hp.maxHeapSort(); wds = hp.getData(); break; }
+			case 2:	wds = mergeSort<string>(wds,0,wds.size()-1); break;
+			case 1: quickSort<string>(wds,0,wds.size()-1); break;
+			default: insertionSort<string>(wds); break;
 		}
 	}
 	catch(invalid_argument &e)
@@ -104,18 +106,17 @@ void Wordlist::readWordsHash(string filename)
 		// while loop runs as long as not at the end of the file
 		while(!myFile.eof())
 		{
-			//for(int i=0; i<wdsHs.getLength();i++)
-			//{
-				word1 = (getline(myFile,temp),temp);
-				if(word1.length() > longWordLength)
-				{
-					longWordLength = word1.length();
-				}
-				if(word1.length() >= 5)
-				{
-					wdsHs.insertItem(word1);
-				}
-			//}
+			word1 = (getline(myFile,temp),temp);
+			if(word1.length() > longWordLength)
+			{
+				longWordLength = word1.length();
+			}
+			if(word1.length() >= 5)
+			{
+				cout << "Working?" << endl;
+				wdsHs.insertItem(word1);
+			}
+			//cout << word1 << endl;
 		}
 		//close the file once all the words have been transfered into the data member wds.
 		myFile.close();
