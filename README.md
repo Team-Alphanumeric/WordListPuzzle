@@ -15,3 +15,9 @@ Merge Sort
 Sorting Time: 0.199767s
 Search Time: 318.01s
 Total Time: 318.212s
+
+
+Quick Sort
+Sorting Time: 0.09577s
+Search Time: 323.345s
+Total Time: 323.442s
