@@ -27,6 +27,20 @@ Sorting Time: 66.3276s
 Search Time: 314.561s
 Total Time: 380.892s
 
- From the comparison, it is evident that the HashTable is significantly fast than any of the other of the sorting algorithms. The actual sorting times are only comparable between Heap Sort, Merge Sort, Quick Sort and Insertion Sort. This is because Hash Table doesn't actually a sorting algorithm, instead it hashes the word into a given index through the hash generator and entered into the Hash Table. The fastest sorting algorithm is Quick Sort but overall MergeSort seems to be the fastest but it requires external storage.  
+ From the comparison, it is evident that the HashTable data structure is significantly faster 
+ than any of data structures employing sorting algorithms. 
+ The actual sorting times are only comparable between Heap Sort, Merge Sort, Quick Sort and Insertion Sort. 
+ This is because Hash Table isn't actually a sorting algorithm, but rather an indexer, 
+ that rediscovers a value's existence directly through the hash generator and the Hash Table. 
+ The fastest sorting algorithm is Quick Sort with Merge Sort and Heap Sort taking about twice as long.
+ Meanwhile, Insertion Sort took on order of 600 times longer to compute than Quick Sort.
   
- The total time is still comparable though and Hash Table wins by a huge margin. It completed the search of the 15x15 board in .103 seconds while the next fastest was Heap Sort in 307 seconds!! This proves that Hash Tables are a very effective way of storing elements but the only draw back can be the space required to create the Hash Tables. Another factor is how well the hash function works, which requires a large distribution to be efficient. If the input entires aren't known, then Hash Table may not be a very effective method of storing elements because then the hash table could have a very small distribution.
+ In terms of the total time, Hash Table wins by a huge margin. 
+ It completed the search of the 15x15 board in .103 seconds while the next fastest was Heap Sort by an extra 307.50 seconds!!
+ This proves that Hash Tables are a very effective way of storing elements. 
+ The only draw back can be the space required to create the Hash Tables.
+ Another factor is how well the hash function works, which requires a large, even distribution to be efficient.
+ If the input entires aren't known apriori, then Hash Table may not be a very effective 
+ method of storing elements because the hash table could have a very small distribution with excessive unused memory.
+
+
