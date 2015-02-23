@@ -24,7 +24,7 @@ int main(void)
 	try
 	{
 		// execute a search
-		// arg1: 0 -> insertion sort, 1 -> quick sort, 2-> merge sort, 3-> hashtable
+		// arg1: 0 -> insertion sort, 1 -> quick sort, 2-> merge sort, 3-> hashtable, 4-> heap sort
 		// arg2: the puzzle number, 1-8, with puzzle size, 15,30,50,50,100,250,500,1000
 		search(3, 1);
 		return 0;
