@@ -47,24 +47,32 @@ void search(const int sortType, const int puzzleNum=1)
 	clock_t start, sorttime, searchtime;
 	if(sortType == 3)
 	{
-		cout<<"Hellur!\n";
 		Wordlist w;
 		w.setDataType(1); start = clock();
 		w.readWordsHash("wordList.txt"); sorttime = clock();
 		findMatches(w,g); searchtime = clock(); // get the time after searching
-
-
-
 	}
 	else
 	{
-		Wordlist w("wordList.txt");
-		w.setDataType(0); start = clock();
-		// sort the list based off the inputed value: 0= InsertionSort, 1=QuickSort, 2=mergeSort
-		w.sortList(sortType); sorttime = clock(); // get the time after sorting
+		try
+		{
+			Wordlist w("wordList.txt");
+			w.setDataType(0); start = clock();
+			// sort the list based off the inputed value: 0= InsertionSort, 1=QuickSort, 2=mergeSort
+			w.sortList(sortType); sorttime = clock(); // get the time after sorting
 
-		// find matches in the sorted wordlist
-		findMatches(w,g); searchtime = clock(); // get the time after searching
+			// find matches in the sorted wordlist
+			findMatches(w,g); searchtime = clock(); // get the time after searching
+		}
+		catch(invalid_argument &e)
+		{
+			cout << "Exception found in Wordlist constructor " << e.what() << endl;
+		}
+		catch(exception &e)
+		{
+			cout << "Unspecified error in search.cpp" << e.what() << endl;
+		}
+
 
 	}
 
