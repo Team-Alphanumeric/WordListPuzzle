@@ -1,5 +1,5 @@
 # WordListPuzzle
-Searchs for words in a word list
+Running time for different sorting algorithims using the 15x15 grid
 
 Searching with Hash table
 Sorting Time: 0.03902s
