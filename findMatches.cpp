@@ -40,9 +40,7 @@ void findMatches(Wordlist w1, Grid gj)
 					{
 						// add a character to the word
 						ch = (gj.getChar(i+(len*x),j+(len*y)));
-						//cout<<"Accessing ("<<i+(len*x)<<","<<j+(len*y)<<")\t";
 						newword.push_back(ch); len++;
-						//cout<<"ch="<<ch<<"\t"<<"wd: "<<newword<<endl;
 
 						// if it's at least 5 letters, check if it matches anything
 						if(newword.size() >= 5)
