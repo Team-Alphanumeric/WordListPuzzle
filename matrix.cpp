@@ -8,7 +8,7 @@
 #include "matrix.h"
 #include <exception>
 #include <stdexcept>
-#include "d_except.h"
+#include "d_execpt.h"
 
 template <typename T>
 matrix<T>::matrix(int numRows, int numCols, const T& initVal):

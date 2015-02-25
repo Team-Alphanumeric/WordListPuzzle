@@ -10,7 +10,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <exception>
-#include "d_except.h"
+#include "d_execpt.h"
 #include "Wordlist.h"
 #include "Grid.h"
 #include "findMatches.h"

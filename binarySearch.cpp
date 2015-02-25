@@ -9,7 +9,7 @@
 using namespace std;
 #include <string>
 #include <vector>
-#include "d_except.h"
+#include "d_execpt.h"
 
 
 bool binSearch(vector <string> wordlist, string wordTarget, int low, int high, bool (*op)(string,string))

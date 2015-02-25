@@ -10,7 +10,7 @@
 /* Implements the grid class for a word search which holds and accesses a character matrix
 */
 
-#include "d_except.h"
+#include "d_execpt.h"
 #include "matrix.h"
 #include "Grid.h"
 #include <iostream>
@@ -23,7 +23,6 @@
 #include <cstring>
 using namespace std;
 #include <exception>
-#include "d_except.h"
 
 
 const int Grid::getSize() {return size;}

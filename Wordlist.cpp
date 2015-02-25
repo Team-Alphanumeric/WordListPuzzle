@@ -7,7 +7,7 @@
 
 #include "Wordlist.h"
 #include "binarySearch.h"
-#include "d_except.h"
+#include "d_execpt.h"
 #include "mergeSort.h"
 #include <iostream>
 #include <fstream>
